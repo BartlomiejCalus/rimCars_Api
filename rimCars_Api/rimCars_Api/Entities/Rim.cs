@@ -3,6 +3,7 @@
     public class Rim
     {
         public int Id { get; set; }
+
         public int size { get; set; }
         public string color { get; set; }
         public double prize { get; set; }
