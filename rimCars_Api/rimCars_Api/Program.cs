@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<SalonsDbContext>();
 builder.Services.AddScoped<DataSeeder>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-builder.Services.AddScoped<Isa>
+builder.Services.AddScoped<ISalonService, SalonService>();
 
 var app = builder.Build();
 
