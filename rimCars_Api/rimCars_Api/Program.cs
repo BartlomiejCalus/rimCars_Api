@@ -11,6 +11,7 @@ builder.Services.AddDbContext<SalonsDbContext>();
 builder.Services.AddScoped<DataSeeder>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<ISalonService, SalonService>();
+builder.Services.AddScoped<IRimService, RimService>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

@@ -12,26 +12,28 @@ namespace rimCars_Api.Controllers
     public class SalonControllers : ControllerBase
     {
         private readonly ISalonService _salonService;
+        private readonly IRimService _rimService;
 
-        public SalonControllers(ISalonService salonService)
+        public SalonControllers(ISalonService salonService, IRimService rimService)
         {
             _salonService = salonService;
+            _rimService = rimService;
         }
 
         [HttpGet]
-        public  ActionResult<IEnumerable<SalonDto>> GetAll()
+        public ActionResult<IEnumerable<SalonDto>> GetAll()
         {
             var result = _salonService.GetAll();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<SalonDto> Get([FromRoute]int id)
+        public ActionResult<SalonDto> Get([FromRoute] int id)
         {
 
             var result = _salonService.GetOne(id);
 
-            if(result == null)
+            if (result == null)
             {
                 return NotFound();
             }
@@ -39,7 +41,7 @@ namespace rimCars_Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddSalon([FromBody]AddSalonDto dto)
+        public ActionResult AddSalon([FromBody] AddSalonDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -47,19 +49,46 @@ namespace rimCars_Api.Controllers
             }
 
             var id = _salonService.Add(dto);
-            
-            return Created($"api / salon/{id}",null);
+
+            return Created($"api / salon/{id}", null);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<SalonDto> Delete([FromRoute] int id)
+        public ActionResult Delete([FromRoute] int id)
         {
             var isDelete = _salonService.Delete(id);
 
-            if(!isDelete) 
+            if (!isDelete)
                 return NotFound();
 
             return NoContent();
+        }
+
+        [HttpGet("{idSalon}/rim")]
+        public ActionResult<RimsDto> GetAllRim([FromRoute] int idSalon)
+        {
+            var result = _rimService.GetAllRim(idSalon);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+
+        }
+
+        [HttpPost("{idSalon}/rim")]
+        public ActionResult AddRim([FromBody] AddRimDto dto, [FromRoute] int idSalon)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var id = _rimService.AddRim(dto, idSalon);
+
+            return Created($"api /salon/{id}/rim", null);
+
         }
 
     }
