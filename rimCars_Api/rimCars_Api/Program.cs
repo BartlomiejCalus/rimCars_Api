@@ -1,4 +1,5 @@
 using rimCars_Api.Entities;
+using rimCars_Api.Services;
 using rimCars_Api;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<SalonsDbContext>();
 builder.Services.AddScoped<DataSeeder>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddScoped<Isa>
 
 var app = builder.Build();
 

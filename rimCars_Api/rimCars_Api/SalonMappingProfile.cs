@@ -14,6 +14,9 @@ namespace rimCars_Api
 
             CreateMap<Rim, RimsDto>();
 
+            CreateMap<AddSalonDto, Salon>()
+                .ForMember(s => s.Address, c => c.MapFrom(dto => new Address() { City = dto.City, Street = dto.Street }));
+
         }
     }
 }
