@@ -10,6 +10,8 @@ namespace rimCars_Api.Services
         int Add(AddSalonDto dto);
         IEnumerable<SalonDto> GetAll();
         SalonDto GetOne(int id);
+
+        public bool Delete(int id);
     }
 
     public class SalonService : ISalonService
@@ -59,6 +61,20 @@ namespace rimCars_Api.Services
             _dbContext.SaveChanges();
 
             return salon.Id;
+        }
+
+        public bool Delete(int id)
+        {
+            var result = _dbContext
+                .Salons
+                .FirstOrDefault(r => r.Id == id);
+            if (result == null)
+                return false;
+
+            _dbContext.Salons.Remove(result);
+            _dbContext.SaveChanges();
+            return true;
+
         }
     }
 }

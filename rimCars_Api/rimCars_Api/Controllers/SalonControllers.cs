@@ -51,5 +51,16 @@ namespace rimCars_Api.Controllers
             return Created($"api / salon/{id}",null);
         }
 
+        [HttpDelete("{id}")]
+        public ActionResult<SalonDto> Delete([FromRoute] int id)
+        {
+            var isDelete = _salonService.Delete(id);
+
+            if(!isDelete) 
+                return NotFound();
+
+            return NoContent();
+        }
+
     }
 }

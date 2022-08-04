@@ -11,6 +11,7 @@ builder.Services.AddDbContext<SalonsDbContext>();
 builder.Services.AddScoped<DataSeeder>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<ISalonService, SalonService>();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -19,9 +20,13 @@ SeedData(app);
 
 app.UseHttpsRedirection();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.MapControllers();
 
 app.Run();
+
 
 void SeedData(IHost app)
 {
