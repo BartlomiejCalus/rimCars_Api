@@ -11,7 +11,5 @@ namespace rimCars_Api.Models
         public string City { get; set; }
         public string Street { get; set; }
 
-        public List<RimsDto> Rims { get; set; }
-
     }
 }
