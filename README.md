@@ -5,3 +5,4 @@ It is created with the intention for a car rim company <br/>
 ◾ ASP.NET Core 6 <br/>
 ◾ Entity framework <br/>
 ◾ AutoMapper <br/>
+◾ FluentValidation <br/>
