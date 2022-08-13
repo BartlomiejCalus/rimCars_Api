@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using rimCars_Api.Entities;
 
@@ -10,9 +11,10 @@ using rimCars_Api.Entities;
 namespace rimCars_Api.Migrations
 {
     [DbContext(typeof(SalonsDbContext))]
-    partial class SalonsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220813084131_AddedUserAndRole")]
+    partial class AddedUserAndRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,9 +135,11 @@ namespace rimCars_Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHs")

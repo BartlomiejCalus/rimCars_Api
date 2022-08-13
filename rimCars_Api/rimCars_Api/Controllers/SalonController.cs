@@ -9,15 +9,13 @@ using Microsoft.EntityFrameworkCore;
 namespace rimCars_Api.Controllers
 {
     [Route("att")]
-    public class SalonControllers : ControllerBase
+    public class SalonController : ControllerBase
     {
         private readonly ISalonService _salonService;
-        private readonly IRimService _rimService;
 
-        public SalonControllers(ISalonService salonService, IRimService rimService)
+        public SalonController(ISalonService salonService)
         {
             _salonService = salonService;
-            _rimService = rimService;
         }
 
         [HttpGet("salons")]
@@ -62,33 +60,6 @@ namespace rimCars_Api.Controllers
                 return NotFound();
 
             return NoContent();
-        }
-
-        [HttpGet("rim")]
-        public ActionResult<RimsDto> GetAllRim([FromQuery] int idSalon)
-        {
-            var result = _rimService.GetAllRim(idSalon);
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
-
-        }
-
-        [HttpPost("rim")]
-        public ActionResult AddRim([FromBody] AddRimDto dto, [FromRoute] int idSalon)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var id = _rimService.AddRim(dto, idSalon);
-
-            return Created($"api /salon/{id}/rim", null);
-
         }
 
     }
