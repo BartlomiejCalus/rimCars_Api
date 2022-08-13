@@ -1,10 +1,13 @@
 ﻿using rimCars_Api.Models;
 using rimCars_Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace rimCars_Api.Controllers
 {
     [Route("att/rim")]
+    [Authorize(Roles = "2")]
+    [Authorize(Policy = "CompanyOwner")]
     public class RimController : ControllerBase
     {
         private readonly IRimService _rimService;
@@ -15,6 +18,7 @@ namespace rimCars_Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<RimsDto> GetAllRim([FromQuery] int idSalon)
         {
             var result = _rimService.GetAllRim(idSalon);

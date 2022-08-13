@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using rimCars_Api.Entities;
 using rimCars_Api.Models;
-using rimCars_Api.Exceptations;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -54,21 +53,21 @@ namespace rimCars_Api.Services
 
             if(user is null)
             {
-                throw new BadRequestExceptation("Invalid email or password");
+                return null;
             }
 
             var result = _passwordHaser.VerifyHashedPassword(user, user.PasswordHs, dto.Password);
 
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new BadRequestExceptation("Invalid email or password");
+                return null;
             }
 
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                new Claim(ClaimTypes.Role, $"{user.Role}"),
+                new Claim(ClaimTypes.Role, $"{user.RoleId}"),
                 new Claim("Company", $"{user.Company}")
             };
 

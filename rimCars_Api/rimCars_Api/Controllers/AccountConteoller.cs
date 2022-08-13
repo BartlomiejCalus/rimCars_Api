@@ -26,6 +26,10 @@ namespace rimCars_Api.Controllers
         public ActionResult Login([FromBody] LoginUserDto dto)
         {
             string token = _accountService.GenerateJwt(dto);
+            if(token == null)
+            {
+                return BadRequest("Wrong email or password");
+            }
             return Ok(token);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using rimCars_Api.Entities;
 using rimCars_Api;
 using rimCars_Api.Models;
@@ -39,6 +40,7 @@ namespace rimCars_Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "3")]
         public ActionResult AddSalon([FromBody] AddSalonDto dto)
         {
             if (!ModelState.IsValid)
@@ -52,6 +54,7 @@ namespace rimCars_Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "3")]
         public ActionResult Delete([FromQuery] int idSalon)
         {
             var isDelete = _salonService.Delete(idSalon);
