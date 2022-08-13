@@ -22,5 +22,12 @@ namespace rimCars_Api.Controllers
             return Ok();
         }
 
+        [HttpPost("login")]
+        public ActionResult Login([FromBody] LoginUserDto dto)
+        {
+            string token = _accountService.GenerateJwt(dto);
+            return Ok(token);
+        }
+
     }
 }

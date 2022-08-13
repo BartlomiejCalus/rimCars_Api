@@ -5,7 +5,7 @@ namespace rimCars_Api.Entities
     public class SalonsDbContext : DbContext
     {
         private readonly string _connectionString=
-            "Server=DESKTOP-P6EHEFN\\SQLEXPRESS;DataBase=SalonDb;Trusted_Connection=True;";
+            "Server=DESKTOP-P6EHEFN\\SQLEXPRESS;DataBase=SalonDb;Trusted_Connection=True";
         
         public DbSet<Salon> Salons { get; set; }
         public DbSet<Address> Addresses { get; set; }

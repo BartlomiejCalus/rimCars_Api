@@ -6,10 +6,36 @@ using FluentValidation;
 using rimCars_Api.Models;
 using rimCars_Api.Models.Validation;
 using FluentValidation.AspNetCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using rimCars_Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var AuthenticationSettings = new AuthenticationSettings();
+
+builder.Configuration.GetSection("Authentication").Bind(AuthenticationSettings);
+
+builder.Services.AddSingleton(AuthenticationSettings);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "Bearer";
+    options.DefaultScheme = "Bearer";
+    options.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(conf =>
+{
+    conf.RequireHttpsMetadata = false;
+    conf.SaveToken = true;
+    conf.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = AuthenticationSettings.JwtIssuer,
+        ValidAudience = AuthenticationSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AuthenticationSettings.JwtKey))
+    };
+});
 
 builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddDbContext<SalonsDbContext>();
@@ -20,6 +46,7 @@ builder.Services.AddScoped<IRimService, RimService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidation>();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -27,6 +54,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 SeedData(app);
 
+app.UseAuthentication();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseSwagger();

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace rimCars_Api.Models
+﻿namespace rimCars_Api.Models
 {
     public class RegisterUserDto
     {
