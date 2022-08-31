@@ -14,9 +14,9 @@ namespace rimCars_Api.Authorization
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CompanyOwnerRequirement requirement)
         {
-            if (context.User == null)
-                return Task.CompletedTask;
-            var company = context.User.FindFirst(c => c.Type != null && c.Type == "Company").Value;
+            //if (context.User == null)
+            //    return Task.CompletedTask;
+            var company = context.User?.FindFirst(c => c.Type != null && c.Type == "Company")?.Value;
 
             var isSame = _dbContex
                 .Salons

@@ -1,3 +1,8 @@
+/*
+ * Swagger is added to the api,
+ * to see the documentation to address instead of "/att" write "/swagger"
+*/
+
 using Microsoft.AspNetCore.Identity;
 using rimCars_Api.Entities;
 using rimCars_Api.Services;
